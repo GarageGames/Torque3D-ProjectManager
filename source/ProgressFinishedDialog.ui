@@ -1,0 +1,131 @@
+<ui version="4.0" >
+ <class>ProgressFinishedDialogClass</class>
+ <widget class="QDialog" name="ProgressFinishedDialogClass" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>312</width>
+    <height>106</height>
+   </rect>
+  </property>
+  <property name="font" >
+   <font>
+    <family>Arial</family>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle" >
+   <string>Packaging Complete</string>
+  </property>
+  <property name="styleSheet" >
+   <string notr="true" />
+  </property>
+  <property name="modal" >
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="horizontalLayout" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>62</y>
+     <width>285</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" >
+    <item>
+     <spacer>
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0" >
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="OpenFolderButton" >
+      <property name="text" >
+       <string>Open Folder</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton" >
+      <property name="text" >
+       <string>OK</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer>
+      <property name="orientation" >
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0" >
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="DescriptionText" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>292</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Packaging is complete, you can find the resulting files here:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="LocationText" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>29</y>
+     <width>286</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>TextLabel</string>
+   </property>
+   <property name="wordWrap" >
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProgressFinishedDialogClass</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>199</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>278</x>
+     <y>121</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

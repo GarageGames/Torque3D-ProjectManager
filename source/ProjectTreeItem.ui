@@ -1,0 +1,171 @@
+<ui version="4.0" >
+ <class>ProjectTreeItemClass</class>
+ <widget class="QFrame" name="ProjectTreeItemClass" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>218</width>
+    <height>61</height>
+   </rect>
+  </property>
+  <property name="palette" >
+   <palette>
+    <active>
+     <colorrole role="Base" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="Base" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="Base" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window" >
+      <brush brushstyle="SolidPattern" >
+       <color alpha="255" >
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
+  </property>
+  <property name="font" >
+   <font/>
+  </property>
+  <property name="windowTitle" >
+   <string>ProjectTreeItem</string>
+  </property>
+  <property name="autoFillBackground" >
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet" >
+   <string notr="true" />
+  </property>
+  <property name="frameShape" >
+   <enum>QFrame::NoFrame</enum>
+  </property>
+  <widget class="QLabel" name="ProjectImage" >
+   <property name="geometry" >
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>91</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="frameShape" >
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text" >
+    <string/>
+   </property>
+   <property name="pixmap" >
+    <pixmap/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ProjectName" >
+   <property name="geometry" >
+    <rect>
+     <x>96</x>
+     <y>0</y>
+     <width>130</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ProjectSizeValue" >
+   <property name="geometry" >
+    <rect>
+     <x>168</x>
+     <y>28</y>
+     <width>46</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Size</string>
+   </property>
+   <property name="alignment" >
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ProjectLastUpdateValue" >
+   <property name="geometry" >
+    <rect>
+     <x>96</x>
+     <y>40</y>
+     <width>116</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ProjectLastUpdate" >
+   <property name="geometry" >
+    <rect>
+     <x>96</x>
+     <y>28</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text" >
+    <string>Last Update</string>
+   </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources>
+  <include location="../../source/torque3dfrontloader.qrc" />
+ </resources>
+ <connections/>
+</ui>

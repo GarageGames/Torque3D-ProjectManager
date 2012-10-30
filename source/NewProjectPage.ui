@@ -1,0 +1,276 @@
+<ui version="4.0" >
+ <class>NewProjectPageClass</class>
+ <widget class="QWidget" name="NewProjectPageClass" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>246</height>
+   </rect>
+  </property>
+  <property name="font" >
+   <font>
+    <family>Arial</family>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle" >
+   <string>Create a New Project</string>
+  </property>
+  <property name="styleSheet" >
+   <string notr="true" />
+  </property>
+  <widget class="QGroupBox" name="groupBox" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>7</y>
+     <width>354</width>
+     <height>62</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Project Settings</string>
+   </property>
+   <widget class="QComboBox" name="TemplateList" >
+    <property name="enabled" >
+     <bool>true</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>244</x>
+      <y>19</y>
+      <width>109</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label" >
+    <property name="geometry" >
+     <rect>
+      <x>198</x>
+      <y>20</y>
+      <width>46</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Template</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>31</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Name</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="NameTextEdit" >
+    <property name="geometry" >
+     <rect>
+      <x>41</x>
+      <y>19</y>
+      <width>148</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="DirectoryTextEdit" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>42</y>
+      <width>343</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>dir</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>72</y>
+     <width>353</width>
+     <height>166</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Template Preview Information</string>
+   </property>
+   <widget class="QFrame" name="PreviewImageFrame" >
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>201</width>
+      <height>134</height>
+     </rect>
+    </property>
+    <property name="frameShape" >
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <widget class="QLabel" name="PreviewImage" >
+     <property name="geometry" >
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>200</width>
+       <height>133</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewCreatedDateLabel" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>80</y>
+      <width>75</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Created Date</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewLastUpdateValue" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>58</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;">&lt;span style=" font-size:10pt;">Last Update Value&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewSizeValue" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>26</y>
+      <width>151</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;">&lt;span style=" font-size:10pt;">Size Value&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewCreatedDateValue" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>90</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>&lt;html>&lt;head>&lt;meta name="qrichtext" content="1" />&lt;style type="text/css">
+p, li { white-space: pre-wrap; }
+&lt;/style>&lt;/head>&lt;body style=" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;">
+&lt;p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;">&lt;span style=" font-size:10pt;">Created Date Value&lt;/span>&lt;/p>&lt;/body>&lt;/html></string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewLastUpdateLabel" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>48</y>
+      <width>71</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Last Update</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="TemplatePreviewSizeLabel" >
+    <property name="geometry" >
+     <rect>
+      <x>220</x>
+      <y>16</y>
+      <width>66</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Size</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="newProjectCreateButton" >
+    <property name="geometry" >
+     <rect>
+      <x>216</x>
+      <y>130</y>
+      <width>65</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Create</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="newProjectCreateButton_2" >
+    <property name="geometry" >
+     <rect>
+      <x>287</x>
+      <y>130</y>
+      <width>66</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Cancel</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources>
+  <include location="../../source/torque3dfrontloader.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>newProjectCreateButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>NewProjectPageClass</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>457</x>
+     <y>429</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>530</x>
+     <y>411</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
