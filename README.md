@@ -20,6 +20,10 @@ Building Project Manager for Windows
 5. Build a release version.  You will be asked to save the solution file before the compilation will begin.  Save with the default name.
 6. `Project Manager.exe` will be created in `Torque3D-ProjectManager/bin/win32`.
 
+Pre-Compiled Version
+--------------------
+A pre-compiled version of the Project Manager along with the necessary support files may be found in the [Downloads](http://www.github.com/GarageGames/Torque3D-ProjectManager/downloads) section of the repository.
+
 Setting Up Project Manager under Windows
 ----------------------------------------
 1. Remove the existing `Torque 3D Toolbox.exe` file and the four Qt .dll files from your Torque 3D repo.
