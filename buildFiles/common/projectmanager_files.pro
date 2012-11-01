@@ -10,7 +10,6 @@ QT += network xml
 
 # Input
 HEADERS += ../../source/copyDir.h \
-           ../../source/dynamictoolwidget.h \
            ../../source/NewProjectPage.h \
            ../../source/PlatformCheck.h \
            ../../source/ProgressDialog.h \
@@ -26,7 +25,6 @@ FORMS += ../../source/NewProjectPage.ui \
          ../../source/ProjectTreeItem.ui \
          ../../source/torque3dfrontloader.ui
 SOURCES += ../../source/copyDir.cpp \
-           ../../source/dynamictoolwidget.cpp \
            ../../source/main.cpp \
            ../../source/NewProjectPage.cpp \
            ../../source/PlatformCheck.cpp \
