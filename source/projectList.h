@@ -18,7 +18,6 @@ public:
    QString    mArgs;
 
    QString getUniqueName() { return QString(mRootName + "-" + mName); };
-   QString getAppName() { return QFileInfo(mPath).fileName(); };
    QString getAppPath();
    QString getLevelPath();
 };

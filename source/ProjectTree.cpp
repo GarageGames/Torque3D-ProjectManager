@@ -288,7 +288,7 @@ ProjectEntry *ProjectTree::getEntryFromAppName(QString uniqueName, QString appNa
    for(int i=0; i<entryList.size(); i++)
    {
       ProjectEntry *entry = entryList.at(i);
-      QString fileName = QFileInfo(entry->mPath).fileName();
+      QString fileName = QFileInfo(entry->mName).fileName();
       if(fileName.compare(appName) == 0)
       {
          return entry;

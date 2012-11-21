@@ -151,69 +151,88 @@ void ProjectList::buildList()
                   QDir projDir(projectInfo.filePath());
                   if(projDir.cd("game"))
                   {
-                     QFileInfoList exes;
-#ifdef Q_WS_MAC
-                     QFileInfoList folders = projDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllDirs);				  
-                     for(int j=0; j<folders.size(); j++)
+                     // Add the template path
+                     ProjectEntry *newEntry = new ProjectEntry();
+                     newEntry->mPath = projDir.path();
+                     newEntry->mName = projectInfo.fileName();
+                     newEntry->mRootName = title;
+                     newEntry->mRootPath = projectInfo.absoluteFilePath();
+
+                     // Check for command line arguments
+                     if(e.hasAttribute("args"))
                      {
-                        QFileInfo folder = folders.at(j);
-                        QDir subFolder(folder.absoluteFilePath() + "/Contents/MacOS");
-                        if(subFolder.exists())
-                        {
-                           QFileInfoList subExes = subFolder.entryInfoList(QDir::Files | QDir::Hidden | QDir::Executable);
-                           if(subExes.size() > 0)
-                           exes = exes + subExes;
-                        }
+                        newEntry->mArgs = e.attribute("args", "");
                      }
-#else
-                     projDir.setFilter(QDir::Files | QDir::Hidden | QDir::Executable);
-                     exes = projDir.entryInfoList();
-#endif
-                     for(int j=0; j<exes.size(); ++j)
-                     {
-                        QFileInfo exeInfo = exes.at(j);
 
-                        bool found = false;
-                        QList<ProjectEntry*> entryList = mProjectDirectoryList.values(title);
-                        ProjectEntry *entry = NULL;
-                        for(int k=0; k<entryList.size();k++)
-                        {
-                           entry = entryList.at(k);
+                     mProjectDirectoryList.insert(title, newEntry);
+                     emit projectEntryAdded(newEntry);
 
-                           if(entry->mPath.compare(exeInfo.filePath()) == 0)
-                           {
-                              found = true;
-                              break;
-                           }
-                        }
+                     if(checkRemovals)
+                        dirEntryRemovalMap.insert(newEntry, true);
 
-                        if(!found)
-                        {
-                           ProjectEntry *newEntry = new ProjectEntry();
-                           //newEntry->mProjectPath = 
-                           newEntry->mPath = exeInfo.filePath();
-                           newEntry->mName = projectInfo.fileName();
-                           newEntry->mRootName = title;
-                           newEntry->mRootPath = projectInfo.absoluteFilePath();
-
-                           // Check for command line arguments
-                           if(e.hasAttribute("args"))
-                           {
-                              newEntry->mArgs = e.attribute("args", "");
-                           }
-
-                           mProjectDirectoryList.insert(title, newEntry);
-                           emit projectEntryAdded(newEntry);
-
-                           if(checkRemovals)
-                              dirEntryRemovalMap.insert(newEntry, true);
-                        }
-                        else
-                        {
-                           if(checkRemovals)
-                              dirEntryRemovalMap.insert(entry, true);
-                        }
-                     }
+//                     QFileInfoList exes;
+//#ifdef Q_WS_MAC
+//                     QFileInfoList folders = projDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllDirs);				  
+//                     for(int j=0; j<folders.size(); j++)
+//                     {
+//                        QFileInfo folder = folders.at(j);
+//                        QDir subFolder(folder.absoluteFilePath() + "/Contents/MacOS");
+//                        if(subFolder.exists())
+//                        {
+//                           QFileInfoList subExes = subFolder.entryInfoList(QDir::Files | QDir::Hidden | QDir::Executable);
+//                           if(subExes.size() > 0)
+//                           exes = exes + subExes;
+//                        }
+//                     }
+//#else
+//                     projDir.setFilter(QDir::Files | QDir::Hidden | QDir::Executable);
+//                     exes = projDir.entryInfoList();
+//#endif
+//                     for(int j=0; j<exes.size(); ++j)
+//                     {
+//                        QFileInfo exeInfo = exes.at(j);
+//
+//                        bool found = false;
+//                        QList<ProjectEntry*> entryList = mProjectDirectoryList.values(title);
+//                        ProjectEntry *entry = NULL;
+//                        for(int k=0; k<entryList.size();k++)
+//                        {
+//                           entry = entryList.at(k);
+//
+//                           if(entry->mPath.compare(exeInfo.filePath()) == 0)
+//                           {
+//                              found = true;
+//                              break;
+//                           }
+//                        }
+//
+//                        if(!found)
+//                        {
+//                           ProjectEntry *newEntry = new ProjectEntry();
+//                           //newEntry->mProjectPath = 
+//                           newEntry->mPath = exeInfo.filePath();
+//                           newEntry->mName = projectInfo.fileName();
+//                           newEntry->mRootName = title;
+//                           newEntry->mRootPath = projectInfo.absoluteFilePath();
+//
+//                           // Check for command line arguments
+//                           if(e.hasAttribute("args"))
+//                           {
+//                              newEntry->mArgs = e.attribute("args", "");
+//                           }
+//
+//                           mProjectDirectoryList.insert(title, newEntry);
+//                           emit projectEntryAdded(newEntry);
+//
+//                           if(checkRemovals)
+//                              dirEntryRemovalMap.insert(newEntry, true);
+//                        }
+//                        else
+//                        {
+//                           if(checkRemovals)
+//                              dirEntryRemovalMap.insert(entry, true);
+//                        }
+//                     }
                   }
                }
             }

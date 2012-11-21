@@ -17,7 +17,6 @@ HEADERS += ../../source/copyDir.h \
            ../../source/projectList.h \
            ../../source/ProjectTree.h \
            ../../source/ProjectTreeItem.h \
-           ../../source/projecttreewidget.h \
            ../../source/torque3dfrontloader.h
 FORMS += ../../source/NewProjectPage.ui \
          ../../source/ProgressDialog.ui \
@@ -33,6 +32,5 @@ SOURCES += ../../source/copyDir.cpp \
            ../../source/projectList.cpp \
            ../../source/ProjectTree.cpp \
            ../../source/ProjectTreeItem.cpp \
-           ../../source/projecttreewidget.cpp \
            ../../source/torque3dfrontloader.cpp
 RESOURCES += ../../source/torque3dfrontloader.qrc
