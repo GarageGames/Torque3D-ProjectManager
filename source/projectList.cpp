@@ -232,61 +232,25 @@ void ProjectList::buildList()
                {
                   QFileInfo templateInfo = templates.at(i);
                   
-                  // Find an executable within the directory
+                  // Find the game directory to tell us this is a valid template
                   QDir templateDir(templateInfo.filePath());
                   if(templateDir.cd("game"))
                   {
-                     QFileInfoList exes;
-#ifdef Q_WS_MAC
-                     QFileInfoList folders = templateDir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllDirs);				  
-                     for(int j=0; j<folders.size(); j++)
+                     // Add the template path
+                     ProjectEntry *newEntry = new ProjectEntry();
+                     newEntry->mPath = templateDir.path();
+                     newEntry->mName = templateInfo.fileName();
+                     newEntry->mRootName = title;
+                     newEntry->mRootPath = templateInfo.absoluteFilePath();
+
+                     // Check for command line arguments
+                     if(e.hasAttribute("args"))
                      {
-                        QFileInfo folder = folders.at(j);
-                        QDir subFolder(folder.absoluteFilePath() + "/Contents/MacOS");
-                        if(subFolder.exists())
-                        {
-                           QFileInfoList subExes = subFolder.entryInfoList(QDir::Files | QDir::Hidden | QDir::Executable);
-                           if(subExes.size() > 0)
-                              exes = exes + subExes;
-                        }
+                        newEntry->mArgs = e.attribute("args", "");
                      }
-#else
-                     templateDir.setFilter(QDir::Files | QDir::Hidden | QDir::Executable);
-                     exes = templateDir.entryInfoList();
-#endif
-                     for(int j=0; j<exes.size(); ++j)
-                     {
-                        QFileInfo exeInfo = exes.at(j);
-                        bool found = false;
-                        QList<ProjectEntry*> entryList = mTemplateDirectoryList.values(title);
-                        ProjectEntry *entry = NULL;
-                        for(int k=0; k<entryList.size();k++)
-                        {
-                           entry = entryList.at(k);
-                           if(entry->mPath.compare(exeInfo.filePath()) == 0)
-                           {
-                              found = true;
-                              break;
-                           }
-                        }
 
-                        if(!found)
-                        {
-                           ProjectEntry *newEntry = new ProjectEntry();
-                           newEntry->mPath = exeInfo.filePath();
-                           newEntry->mName = templateInfo.fileName();
-                           newEntry->mRootName = title;
-                           newEntry->mRootPath = templateInfo.absoluteFilePath();
+                     mTemplateDirectoryList.insert(title, newEntry);
 
-                           // Check for command line arguments
-                           if(e.hasAttribute("args"))
-                           {
-                              newEntry->mArgs = e.attribute("args", "");
-                           }
-
-                           mTemplateDirectoryList.insert(title, newEntry);
-                        }
-                     }
                   }
                }
             }
