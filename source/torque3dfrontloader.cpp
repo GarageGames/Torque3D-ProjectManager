@@ -492,7 +492,7 @@ void Torque3DFrontloader::updateSelectedProjectInfo()
 
       QSettings settings;
       settings.beginGroup("ProjectInfo" + mSelectedProject->mName);
-      QString appName = settings.value("selectedApp", QFileInfo(mSelectedProject->mPath).fileName()).toString();
+      QString appName = settings.value("selectedApp", QFileInfo(mSelectedProject->mName).fileName()).toString();
       settings.endGroup();
 
       ProjectEntry *appEntry = ui.ProjectTreeList->getEntryFromAppName(mSelectedProject->getUniqueName(), appName);
@@ -541,16 +541,6 @@ void Torque3DFrontloader::setFirstSelectedProject()
 
    // There is no first project, so hide the project controls
    disableProjectControls();
-}
-
-void Torque3DFrontloader::on_projectAppSelected(const QString &selected)
-{
-   ProjectEntry *appEntry = ui.ProjectTreeList->getEntryFromAppName(mSelectedProject->getUniqueName(), selected);
-
-   if(appEntry != NULL)
-   {
-      setSelectedApp(appEntry);
-   }
 }
 
 void Torque3DFrontloader::packageProjectStaging()

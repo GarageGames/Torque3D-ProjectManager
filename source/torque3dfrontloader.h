@@ -284,7 +284,6 @@ public slots:
    void updateSelectedProjectInfo();
    bool setSelectedProjectByUniqueName(const QString &uniqueName, bool setFirstIfNot = true);
    void setFirstSelectedProject();
-   void on_projectAppSelected(const QString &selected);
 
    void refreshStylesheet();
    static void loadStylesheet();
