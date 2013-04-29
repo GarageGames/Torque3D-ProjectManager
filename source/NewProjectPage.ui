@@ -8,8 +8,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>246</height>
+    <width>485</width>
+    <height>281</height>
    </rect>
   </property>
   <property name="font" >
@@ -31,7 +31,7 @@
     <rect>
      <x>10</x>
      <y>7</y>
-     <width>354</width>
+     <width>465</width>
      <height>62</height>
     </rect>
    </property>
@@ -64,6 +64,19 @@
      <string>Template</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="newChooseModulesButton" >
+    <property name="geometry" >
+     <rect>
+      <x>363</x>
+      <y>19</y>
+      <width>92</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text" >
+     <string>Choose Modules</string>
+    </property>
+   </widget>
    <widget class="QLabel" name="label_7" >
     <property name="geometry" >
      <rect>
@@ -92,7 +105,7 @@
      <rect>
       <x>10</x>
       <y>42</y>
-      <width>343</width>
+      <width>445</width>
       <height>18</height>
      </rect>
     </property>
@@ -106,7 +119,7 @@
     <rect>
      <x>10</x>
      <y>72</y>
-     <width>353</width>
+     <width>465</width>
      <height>166</height>
     </rect>
    </property>
@@ -223,32 +236,32 @@ p, li { white-space: pre-wrap; }
      <string>Size</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="newProjectCreateButton" >
+  </widget>
+  <widget class="QPushButton" name="newProjectCreateButton" >
     <property name="geometry" >
-     <rect>
-      <x>216</x>
-      <y>130</y>
+      <rect>
+      <x>339</x>
+      <y>246</y>
       <width>65</width>
       <height>25</height>
-     </rect>
+      </rect>
     </property>
     <property name="text" >
-     <string>Create</string>
+      <string>Create</string>
     </property>
-   </widget>
-   <widget class="QPushButton" name="newProjectCreateButton_2" >
+  </widget>
+  <widget class="QPushButton" name="newProjectCreateButton_2" >
     <property name="geometry" >
-     <rect>
-      <x>287</x>
-      <y>130</y>
+      <rect>
+      <x>409</x>
+      <y>246</y>
       <width>66</width>
       <height>25</height>
-     </rect>
+      </rect>
     </property>
     <property name="text" >
-     <string>Cancel</string>
+      <string>Cancel</string>
     </property>
-   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11" />

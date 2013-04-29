@@ -11,6 +11,7 @@
 #include "copyDir.h"
 #include "ProjectTree.h"
 #include "NewProjectPage.h"
+#include "ProjectModuleListPage.h"
 
 #ifdef Q_WS_WIN
 #include <stdio.h>
@@ -35,6 +36,8 @@ class QTcpServer;
 class QTcpSocket;
 class QHttp;
 class QHttpResponseHeader;
+class ModuleList;
+class ModuleListInstance;
 
 class Torque3DFrontloader : public QMainWindow
 {
@@ -69,7 +72,11 @@ public:
    void createProgressData();
    void setupProjectTree();
    void createNewProjectPage();
+   void createProjectModuleListPage();
    void startUp();
+
+   void createModuleList();
+   ProjectModuleListPage* getProjectModuleListPage() { return mProjectModuleListPage; }
 
    void setupFileSystemWatcher();
 
@@ -101,7 +108,7 @@ public:
    void createProjectGeneration();
 	
    void replaceTextInFile(QString file, QString srcText, QString dstText);
-   void createNewProject(const QString &templatePath, const QString &newProjectPath);
+   void createNewProject(const QString &templatePath, const QString &newProjectPath, ModuleListInstance* moduleInst);
 
    QPixmap *getProjectPixmap(ProjectEntry *entry);
 
@@ -113,6 +120,9 @@ public:
 
    ProjectList *mProjectList;
    ProjectList *getProjectList() { return mProjectList; };
+
+   ModuleList* mModuleList;
+   ModuleList* getModuleList() { return mModuleList; };
 
    bool mNewProjectSet;
    ProjectEntry *mSelectedProject;
@@ -156,6 +166,7 @@ protected:
 private:
    Ui::Torque3DFrontloaderClass ui;
    NewProjectPage *mNewProjectPage;
+   ProjectModuleListPage* mProjectModuleListPage;
 
    QHttp *mHttp;
 
@@ -245,6 +256,7 @@ private:
 
    QDir mTemplateDir;
    QDir mNewProjectDir;
+   ModuleListInstance* mNewProjectModuleList;
 
    // startup profiling
    QString mCurrentProfileStep;

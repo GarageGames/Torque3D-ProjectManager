@@ -14,7 +14,7 @@ Before you may compile the Project Manager you will need to build Qt 4.8.2.  Ple
 Building Project Manager for Windows
 ------------------------
 1. Open a Visual Studio Command Prompt (2010).
-2. Go to the `Torque3D-ProjectManager/buildFiles/buildFiles/VisualStudio` directory.
+2. Go to the `Torque3D-ProjectManager/buildFiles/VisualStudio` directory.
 3. Type `qmake` and press return.  This will create a Visual Studio project file.
 4. Start VS2010 and load the Project Manager project.
 5. Build a release version.  You will be asked to save the solution file before the compilation will begin.  Save with the default name.
