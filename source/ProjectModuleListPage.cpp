@@ -312,6 +312,18 @@ void ProjectModuleListPage::on_ProjectModuleListRegenButton_clicked()
 {
    copyToModuleListInstance();
    close();
+
+   // Write out the module instance to the project file
+   if(!mCurrentInstance->mFileSource.isEmpty())
+   {
+      mCurrentInstance->replaceProjectFileContents(mCurrentInstance->mFileSource);
+   }
+
+   // Regenerate the projects
+   if(mFrontloader)
+   {
+      mFrontloader->generateSourceProject();
+   }
 }
 
 void ProjectModuleListPage::on_ProjectModuleListOKButton_clicked()

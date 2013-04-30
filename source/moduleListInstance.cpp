@@ -113,6 +113,204 @@ void ModuleListInstance::buildInstances(ModuleList* list)
    }
 }
 
+void ModuleListInstance::clearData()
+{
+   mMoveClassIndex = 0;
+   for(int i=0; i<mMoveClassInstances.count(); ++i)
+   {
+      MoveClassEntry* move = mMoveClassInstances.at(i)->mProjectGenItem;
+      if(move->mDefaultChoice)
+      {
+         mMoveClassIndex = i;
+         break;
+      }
+   }
+
+   for(int i=0; i<mModuleGroupInstances.count(); ++i)
+   {
+      ProjectGenItem* item = mModuleGroupInstances.at(i)->mProjectGenItem;
+      ModuleEntry* group = static_cast<ModuleEntry*>(item);
+      mModuleGroupInstances.at(i)->mGroupIndex = group->mDefaultChoice;
+   }
+
+   for(int i=0; i<mModuleInstances.count(); ++i)
+   {
+      mModuleInstances.at(i)->mState = false;
+      mModuleInstances.at(i)->mPathData = "";
+   }
+
+   for(int i=0; i<mProjectDefInstances.count(); ++i)
+   {
+      mProjectDefInstances.at(i)->mState = false;
+      mProjectDefInstances.at(i)->mPathData = "";
+   }
+}
+
+bool ModuleListInstance::readMoveClass(QString& text)
+{
+   for(int i=0; i<mMoveClassInstances.count(); ++i)
+   {
+      ProjectGenMoveInstance* inst = mMoveClassInstances.at(i);
+      MoveClassEntry* move = inst->mProjectGenItem;
+      if(!move->mName.isEmpty() && text.contains(move->mName, Qt::CaseInsensitive))
+      {
+         // Found a move class.  Read in its state.
+         if(text.contains("true", Qt::CaseInsensitive))
+         {
+            mMoveClassIndex = i;
+         }
+
+         return true;
+      }
+   }
+
+   return false;
+}
+
+bool ModuleListInstance::readModulePath(QString& text)
+{
+   for(int i=0; i<mModuleInstances.count(); ++i)
+   {
+      ProjectGenInstance* inst = mModuleInstances.at(i);
+      ModuleEntry* module = static_cast<ModuleEntry*>(inst->mProjectGenItem);
+      if(!module->mPath.isEmpty() && text.contains(module->mPath, Qt::CaseInsensitive))
+      {
+         // Found a match so retrieve the path data
+         QString path = "";
+         int start = text.indexOf("\"");
+         if(start != -1)
+         {
+            int end = text.indexOf("\"", start+1);
+            if(end != -1)
+            {
+               path = text.mid(start+1, end-start-1);
+            }
+         }
+
+         // Store the path
+         inst->mPathData = path;
+
+         return true;
+      }
+   }
+
+   return false;
+}
+
+bool ModuleListInstance::readModule(QString& text)
+{
+   // Try against module groups
+   for(int i=0; i<mModuleGroupInstances.count(); ++i)
+   {
+      ProjectGenInstance* groupInst = mModuleGroupInstances.at(i);
+      ModuleEntry* group = static_cast<ModuleEntry*>(groupInst->mProjectGenItem);
+      for(int j=0; j<group->mModules.count(); ++j)
+      {
+         ModuleEntry* module = group->mModules.at(j);
+         if(!module->mName.isEmpty() && text.contains(module->mName, Qt::CaseInsensitive))
+         {
+            // Found a match
+            groupInst->mGroupIndex = j;
+            return true;
+         }
+      }
+   }
+
+   // Now try individual modules
+   for(int i=0; i<mModuleInstances.count(); ++i)
+   {
+      ProjectGenInstance* inst = mModuleInstances.at(i);
+      ModuleEntry* module = static_cast<ModuleEntry*>(inst->mProjectGenItem);
+      if(text.contains(module->mName, Qt::CaseInsensitive))
+      {
+         // Found a match
+         inst->mState = true;
+         return true;
+      }
+   }
+
+   return false;
+}
+
+bool ModuleListInstance::readProjectDefine(QString& text)
+{
+   for(int i=0; i<mProjectDefInstances.count(); ++i)
+   {
+      ProjectGenInstance* inst = mProjectDefInstances.at(i);
+      ProjectDefineEntry* pd = static_cast<ProjectDefineEntry*>(inst->mProjectGenItem);
+      if(text.contains(pd->mName, Qt::CaseInsensitive))
+      {
+         // Found a match
+         inst->mState = true;
+         return true;
+      }
+   }
+
+   return false;
+}
+
+bool ModuleListInstance::readProjectFile(const QString& path)
+{
+   clearData();
+
+   mFileSource = path;
+
+   QFile srcFile(path);
+   int stage = 0;
+
+   if(srcFile.open(QIODevice::ReadOnly | QIODevice::Text))
+   {
+      while(!srcFile.atEnd())
+      {
+         QString text = srcFile.readLine();
+         QString strippedText = text.simplified();
+
+         if(!strippedText.startsWith("//"))
+         {
+            if(text.contains("Torque3D::beginConfig(", Qt::CaseInsensitive))
+            {
+               // We now check for modules and project defines.  On to the next stage.
+               stage = 1;
+            }
+            else if(text.contains("Torque3D::endConfig(", Qt::CaseInsensitive))
+            {
+               // Done checking for modules and project defines.  On to the next stage.
+               stage = 2;
+            }
+            else if(stage == 0 && strippedText.startsWith("$"))
+            {
+               // Could be a move class variable or a module path.  Start with
+               // a move class.
+               bool handled = readMoveClass(text);
+               if(!handled)
+               {
+                  // Not a move class so try a module path.
+                  readModulePath(text);
+               }
+            }
+            else if(stage == 1 && text.contains("includeModule("))
+            {
+               // Handle the module
+               readModule(text);
+            }
+            else if(stage == 1 && text.contains("addProjectDefine("))
+            {
+               // Handle the project define
+               readProjectDefine(text);
+            }
+         }
+      }
+
+      srcFile.close();
+   }
+   else
+   {
+      return false;
+   }
+
+   return true;
+}
+
 void ModuleListInstance::clearWrittenFlags()
 {
    for(int i=0; i<mMoveClassInstances.count(); ++i)

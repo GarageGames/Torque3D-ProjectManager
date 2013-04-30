@@ -257,6 +257,7 @@ private:
    QDir mTemplateDir;
    QDir mNewProjectDir;
    ModuleListInstance* mNewProjectModuleList;
+   ModuleListInstance* mChangeProjectModulesList;
 
    // startup profiling
    QString mCurrentProfileStep;
@@ -275,7 +276,9 @@ public slots:
 
    void clearSettings();
    void openSourceCode();
+   void changeProjectModules();
    void generateSourceProject();
+
 
    // file system watcher slots
    void fileChanged(const QString &path);
@@ -333,6 +336,7 @@ public slots:
 
 private slots:
    void on_GenerateSourceButton_clicked();
+   void on_ChangeModulesButton_clicked();
    void on_OpenFolderButton_clicked();
    void on_CreateNewProjectButton_clicked();
    //void on_ProjectTree_clicked(const QModelIndex &index);

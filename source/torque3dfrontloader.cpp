@@ -92,6 +92,7 @@ void Torque3DFrontloader::disableProjectControls()
    // Disable all controls that work with projects
    ui.OpenFolderButton->setDisabled(true);
    ui.GenerateSourceButton->setDisabled(true);
+   ui.ChangeModulesButton->setDisabled(true);
 
    ui.ExistingProjectInfoPreviewImage->clear();
 }
@@ -101,6 +102,7 @@ void Torque3DFrontloader::enableProjectControls()
    // Enable all controls that work with projects
    ui.OpenFolderButton->setDisabled(false);
    ui.GenerateSourceButton->setDisabled(false);
+   ui.ChangeModulesButton->setDisabled(false);
 }
 
 void Torque3DFrontloader::setupValues()
@@ -153,10 +155,16 @@ void Torque3DFrontloader::setupValues()
    mZipProcess = NULL;
 
    mNewProjectModuleList = NULL;
+   mChangeProjectModulesList = NULL;
 }
 
 Torque3DFrontloader::~Torque3DFrontloader()
 {
+   if(mChangeProjectModulesList)
+   {
+      delete mChangeProjectModulesList;
+   }
+
    writeSettings();
 }
 
@@ -526,6 +534,7 @@ void Torque3DFrontloader::updateSelectedProjectInfo()
       if(!QFile::exists(mSelectedProject->mRootPath + "/buildFiles"))
       {
          ui.GenerateSourceButton->setEnabled(false);
+         ui.ChangeModulesButton->setEnabled(false);
       }
    }
    else
@@ -1495,6 +1504,25 @@ void Torque3DFrontloader::openSourceCode()
    }
 }
 
+void Torque3DFrontloader::changeProjectModules()
+{
+   // Create the default module list
+   if(mChangeProjectModulesList)
+   {
+      delete mChangeProjectModulesList;
+      mChangeProjectModulesList = NULL;
+   }
+   mChangeProjectModulesList = new ModuleListInstance();
+   mChangeProjectModulesList->buildInstances(getModuleList());
+
+   // Get the modules for the project
+   QString file = QDir::toNativeSeparators(getSelectedProject()->mRootPath + "/buildFiles/config/project.conf");
+   mChangeProjectModulesList->readProjectFile(file);
+
+   // Open the module window
+   getProjectModuleListPage()->launch(mChangeProjectModulesList, true);
+}
+
 void Torque3DFrontloader::generateSourceProject()
 { 
    QDialog *prompt = new QDialog();
@@ -1807,6 +1835,11 @@ bool Torque3DFrontloader::setResourceString(const QString &filePath, const QStri
 void Torque3DFrontloader::on_GenerateSourceButton_clicked()
 {
    generateSourceProject();
+}
+
+void Torque3DFrontloader::on_ChangeModulesButton_clicked()
+{
+   changeProjectModules();
 }
 
 void Torque3DFrontloader::readSettings()

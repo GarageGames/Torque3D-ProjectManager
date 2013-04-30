@@ -45,18 +45,29 @@ class ModuleListInstance : public QObject
 
 protected:
    void clearWrittenFlags();
+   void clearData();
 
+   // For reading in the project file contents
+   bool readMoveClass(QString& text);
+   bool readModulePath(QString& text);
+   bool readModule(QString& text);
+   bool readProjectDefine(QString& text);
+
+   // For replacing the file contents
    bool handleMoveClass(QString& text);
    bool handleModulePath(QString& text);
    void handleModule(QStringList& doc, QString& text);
    void handleProjectDefine(QStringList& doc, QString& text);
 
+   // For replacing the file contents
    void writeUnhandledMoveClasses(QStringList& doc);
    void writeUnhandledModulePaths(QStringList& doc);
    void writeUnhandledModules(QStringList& doc);
    void writeUnhandledProjectDefines(QStringList& doc);
 
 public:
+   QString mFileSource;
+
    int mMoveClassIndex;
    QList<ProjectGenMoveInstance*> mMoveClassInstances;
    QList<ProjectGenInstance*> mModuleInstances;
@@ -70,6 +81,8 @@ public:
    void clear();
 
    void buildInstances(ModuleList* list);
+
+   bool readProjectFile(const QString& path);
 
    bool replaceProjectFileContents(const QString& file);
 };
