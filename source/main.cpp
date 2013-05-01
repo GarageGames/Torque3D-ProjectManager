@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
    // application info settings
    QCoreApplication::setOrganizationName("GarageGames");
    QCoreApplication::setOrganizationDomain("garagegames.com");
-   QCoreApplication::setApplicationName("Torque 3D Project Manager");
+   QCoreApplication::setApplicationName("Torque 3D Project Manager 2.0");
 
    QDir::setCurrent(QApplication::applicationDirPath());
    a.setWindowIcon(QIcon(":/Torque3DFrontloader/resources/toolbox-16x16_32.png"));
