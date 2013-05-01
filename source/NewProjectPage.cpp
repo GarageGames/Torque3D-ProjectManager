@@ -1,11 +1,13 @@
 #include "NewProjectPage.h"
 #include "torque3dfrontloader.h"
+#include "moduleListInstance.h"
 
 NewProjectPage::NewProjectPage(QWidget *parent)
    : QWidget(parent)
 {
    setupUi(this);
    mFrontloader = NULL;
+   mCurrentInstance = NULL;
 
    TemplatePreviewSizeLabel->setVisible(false);
    TemplatePreviewSizeValue->setVisible(false);
@@ -41,6 +43,10 @@ void NewProjectPage::setDefaults()
 
       // set the default location
       DirectoryTextEdit->setText(defaultFilePath.absolutePath());
+
+      // Default module list instance
+      mCurrentInstance = new ModuleListInstance();
+      mCurrentInstance->buildInstances(mFrontloader->getModuleList());
    }
 }
 
@@ -150,7 +156,15 @@ void NewProjectPage::on_newProjectCreateButton_clicked()
       {
          QString templatePath = QDir::toNativeSeparators(entry->mRootPath);
          QString newProjectPath = QDir::toNativeSeparators(DirectoryTextEdit->text() + "/" + NameTextEdit->text());
-         mFrontloader->createNewProject(templatePath, newProjectPath);
+         mFrontloader->createNewProject(templatePath, newProjectPath, mCurrentInstance);
       }
+   }
+}
+
+void NewProjectPage::on_newChooseModulesButton_clicked()
+{
+   if(mFrontloader && mFrontloader->getProjectModuleListPage())
+   {
+      mFrontloader->getProjectModuleListPage()->launch(mCurrentInstance, false);
    }
 }

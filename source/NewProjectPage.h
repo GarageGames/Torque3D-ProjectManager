@@ -8,6 +8,7 @@ using namespace Ui;
 
 class Torque3DFrontloader;
 class ProjectEntry;
+class ModuleListInstance;
 
 class NewProjectPage : public QWidget, public NewProjectPageClass
 {
@@ -16,6 +17,7 @@ class NewProjectPage : public QWidget, public NewProjectPageClass
 private:
    Torque3DFrontloader *mFrontloader;
    QMap<QString, ProjectEntry*> mTemplateNameList;
+   ModuleListInstance* mCurrentInstance;
 
 public:
    NewProjectPage(QWidget *parent = 0);
@@ -28,6 +30,7 @@ public:
 
 public slots:
    void buildTemplateList();
+   void on_newChooseModulesButton_clicked();
 
 private slots:
    void on_newProjectCreateButton_clicked();

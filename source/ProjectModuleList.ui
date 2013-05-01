@@ -1,0 +1,120 @@
+<ui version="4.0" >
+ <class>ProjectModuleListClass</class>
+ <widget class="QWidget" name="ProjectModuleListClass" >
+  <property name="windowModality" >
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>300</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="font" >
+   <font>
+    <family>Arial</family>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+   </font>
+  </property>
+  <property name="windowTitle" >
+   <string>Project Modules</string>
+  </property>
+  <property name="styleSheet" >
+   <string notr="true" />
+  </property>
+  <widget class="QGroupBox" name="moveGroupBox" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>7</y>
+     <width>280</width>
+     <height>52</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Move Class and Networking</string>
+   </property>
+   <widget class="QComboBox" name="MoveClassesList" >
+    <property name="enabled" >
+     <bool>true</bool>
+    </property>
+    <property name="geometry" >
+     <rect>
+      <x>10</x>
+      <y>19</y>
+      <width>260</width>
+      <height>23</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="moduleGroupBox" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>69</y>
+     <width>280</width>
+     <height>286</height>
+    </rect>
+   </property>
+   <property name="title" >
+    <string>Modules</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ProjectModuleListRegenButton" >
+    <property name="geometry" >
+      <rect>
+        <x>148</x>
+        <y>365</y>
+        <width>71</width>
+        <height>25</height>
+      </rect>
+    </property>
+    <property name="text" >
+      <string>Regenerate</string>
+    </property>
+  </widget>
+  <widget class="QPushButton" name="ProjectModuleListOKButton" >
+    <property name="geometry" >
+      <rect>
+        <x>153</x>
+        <y>365</y>
+        <width>66</width>
+        <height>25</height>
+      </rect>
+    </property>
+    <property name="text" >
+      <string>OK</string>
+    </property>
+  </widget>
+  <widget class="QPushButton" name="ProjectModuleListCloseButton" >
+    <property name="geometry" >
+      <rect>
+        <x>224</x>
+        <y>365</y>
+        <width>66</width>
+        <height>25</height>
+      </rect>
+    </property>
+    <property name="text" >
+      <string>Cancel</string>
+    </property>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources>
+  <include location="../../source/torque3dfrontloader.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>ProjectModuleListCloseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ProjectModuleListClass</receiver>
+   <slot>close()</slot>
+  </connection>
+ </connections>
+</ui>

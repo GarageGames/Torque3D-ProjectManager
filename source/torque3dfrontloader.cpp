@@ -1,4 +1,6 @@
 #include "torque3dfrontloader.h"
+#include "moduleList.h"
+#include "moduleListInstance.h"
 #include <QtNetwork>
 #include <QStyleFactory>
 #include <QDir>
@@ -28,11 +30,16 @@ Torque3DFrontloader::Torque3DFrontloader(QWidget *parent, Qt::WFlags flags)
    createMenus();
    setupFileSystemWatcher();
    createProjectList();
+   createModuleList();
    createProgressData();
    setupProjectTree();
 
    // Setup the New Project Page, this needs to be after the ProjectList is set up
    createNewProjectPage();
+
+   // Set up the Project Module List page.  This needs to be after the ModuleList is set up
+   createProjectModuleListPage();
+
    startUp();	
 
    // --- we do our tcp song and dance to ensure we don't run two instances of the Toolbox
@@ -85,6 +92,7 @@ void Torque3DFrontloader::disableProjectControls()
    // Disable all controls that work with projects
    ui.OpenFolderButton->setDisabled(true);
    ui.GenerateSourceButton->setDisabled(true);
+   ui.ChangeModulesButton->setDisabled(true);
 
    ui.ExistingProjectInfoPreviewImage->clear();
 }
@@ -94,6 +102,7 @@ void Torque3DFrontloader::enableProjectControls()
    // Enable all controls that work with projects
    ui.OpenFolderButton->setDisabled(false);
    ui.GenerateSourceButton->setDisabled(false);
+   ui.ChangeModulesButton->setDisabled(false);
 }
 
 void Torque3DFrontloader::setupValues()
@@ -144,10 +153,18 @@ void Torque3DFrontloader::setupValues()
 
    mProcess = NULL;
    mZipProcess = NULL;
+
+   mNewProjectModuleList = NULL;
+   mChangeProjectModulesList = NULL;
 }
 
 Torque3DFrontloader::~Torque3DFrontloader()
 {
+   if(mChangeProjectModulesList)
+   {
+      delete mChangeProjectModulesList;
+   }
+
    writeSettings();
 }
 
@@ -289,6 +306,12 @@ void Torque3DFrontloader::createProjectList()
    connect(ui.ProjectTreeList, SIGNAL(projectRemovalDone()), this, SLOT(projectRemovalDone()));
 }
 
+void Torque3DFrontloader::createModuleList()
+{
+   mModuleList = new ModuleList();
+   mModuleList->buildList();
+}
+
 void Torque3DFrontloader::createProgressData()
 {
    // set up our progress dialog, data, and stages
@@ -346,6 +369,13 @@ void Torque3DFrontloader::createNewProjectPage()
    mNewProjectPage = new NewProjectPage();
    mNewProjectPage->hide();
    mNewProjectPage->setFrontloader(this);
+}
+
+void Torque3DFrontloader::createProjectModuleListPage()
+{
+   mProjectModuleListPage = new ProjectModuleListPage();
+   mProjectModuleListPage->hide();
+   mProjectModuleListPage->setFrontloader(this);
 }
 
 void Torque3DFrontloader::startUp()
@@ -504,6 +534,7 @@ void Torque3DFrontloader::updateSelectedProjectInfo()
       if(!QFile::exists(mSelectedProject->mRootPath + "/buildFiles"))
       {
          ui.GenerateSourceButton->setEnabled(false);
+         ui.ChangeModulesButton->setEnabled(false);
       }
    }
    else
@@ -684,7 +715,7 @@ void Torque3DFrontloader::createProjectCheck()
    setSelectedProjectByUniqueName(uniqueName, false);
 }
 
-void Torque3DFrontloader::createNewProject(const QString &templatePath, const QString &newProjectPath)
+void Torque3DFrontloader::createNewProject(const QString &templatePath, const QString &newProjectPath, ModuleListInstance* moduleInst)
 {
    // init values
    mCreateTemplateCopyDone = false;
@@ -699,6 +730,8 @@ void Torque3DFrontloader::createNewProject(const QString &templatePath, const QS
 
    mTemplateDir.setPath(templatePath);
    mNewProjectDir.setPath(newProjectPath);
+
+   mNewProjectModuleList = moduleInst;
 
    QDir myProjectsDir(mUserProjectPath);
    if(!myProjectsDir.exists())
@@ -888,6 +921,10 @@ void Torque3DFrontloader::createReformattingFiles()
    QString projectConfDst("setGameProjectName(\"" + newName + "\");");
    replaceTextInFile(QDir::toNativeSeparators(file + "buildFiles/config/project.conf"), templateName, newName);
    replaceTextInFile(QDir::toNativeSeparators(file + "buildFiles/config/project.mac.conf"), templateName, newName);
+   if(mNewProjectModuleList)
+   {
+      mNewProjectModuleList->replaceProjectFileContents( QDir::toNativeSeparators(file + "buildFiles/config/project.conf") );
+   }
    mProgressDialog->setSubStageProgress(11 * (2+16));
    mProgressDialog->updateDetailText(QString("reformat: ") + "project.conf");
    replaceTextInFile(QDir::toNativeSeparators(file + "buildFiles/config/project.360.conf"), templateName, newName);
@@ -1467,6 +1504,25 @@ void Torque3DFrontloader::openSourceCode()
    }
 }
 
+void Torque3DFrontloader::changeProjectModules()
+{
+   // Create the default module list
+   if(mChangeProjectModulesList)
+   {
+      delete mChangeProjectModulesList;
+      mChangeProjectModulesList = NULL;
+   }
+   mChangeProjectModulesList = new ModuleListInstance();
+   mChangeProjectModulesList->buildInstances(getModuleList());
+
+   // Get the modules for the project
+   QString file = QDir::toNativeSeparators(getSelectedProject()->mRootPath + "/buildFiles/config/project.conf");
+   mChangeProjectModulesList->readProjectFile(file);
+
+   // Open the module window
+   getProjectModuleListPage()->launch(mChangeProjectModulesList, true);
+}
+
 void Torque3DFrontloader::generateSourceProject()
 { 
    QDialog *prompt = new QDialog();
@@ -1779,6 +1835,11 @@ bool Torque3DFrontloader::setResourceString(const QString &filePath, const QStri
 void Torque3DFrontloader::on_GenerateSourceButton_clicked()
 {
    generateSourceProject();
+}
+
+void Torque3DFrontloader::on_ChangeModulesButton_clicked()
+{
+   changeProjectModules();
 }
 
 void Torque3DFrontloader::readSettings()
