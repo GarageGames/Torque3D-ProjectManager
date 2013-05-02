@@ -4,4 +4,4 @@
 
 TEMPLATE = app
 
-include ((../common/projectmanager_files.pro)
+include (../common/projectmanager_files.pro)
