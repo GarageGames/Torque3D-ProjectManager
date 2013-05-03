@@ -22,7 +22,7 @@ Building Project Manager for Windows
 
 Pre-Compiled Version
 --------------------
-A pre-compiled version of the Project Manager along with the necessary support files may be found in the [Downloads](http://www.github.com/GarageGames/Torque3D-ProjectManager/downloads) section of the repository.
+A pre-compiled version of the Project Manager along with the necessary support files may be found in the here: [Downloads page of Torque 3D repo](https://github.com/GarageGames/Torque3D/wiki/Project-Manager-Archive)
 
 Setting Up Project Manager under Windows
 ----------------------------------------
