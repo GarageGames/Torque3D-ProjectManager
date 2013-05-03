@@ -33,9 +33,10 @@ Setting Up Project Manager under Windows
 Using Project Manager
 ---------------------
 1. Double click `Project Manager.exe` to start it up.
-2. Click on the `New Project` button to create a project from an existing Torque 3D template.
+2. Click on the `New Project` button to create a project from an existing Torque 3D template.  Click on the `Choose Modules` button to change which modules will be included with your project.
 3. With a project selected, click on the `Open Folder` button to open a new window at the project's location.
-4. With a project selected, click on the `Regenerate` button to regenerate the project's C++ files.  This is the same as launching the `generateProjects.bat` file.
+4. With a project selected, click on the `Modules` button to modify which modules an existing project will compile with.
+5. With a project selected, click on the `Regenerate` button to regenerate the project's C++ files.  This is the same as launching the `generateProjects.bat` file.
 
 License
 -------
