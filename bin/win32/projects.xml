@@ -33,6 +33,7 @@ Here are some examples:
     <module name="razerHydra" path="$RAZERHYDRA_SDK_PATH">Razer Hydra Controller</module>
     <module name="oculusVR" path="$OCULUSVR_SDK_PATH">Oculus VR Devices</module>
     <module name="webDeploy">Web Deployment</module>
+    <module name="navigation">Recast Navigation</module>
     <moduleGroup description="Physics Library">
       <module name="" donotwrite="1" default="1">Torque Physics</module>
       <module name="physX">PhysX Physics Library</module>
