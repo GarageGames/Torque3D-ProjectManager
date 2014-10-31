@@ -1318,7 +1318,7 @@ void Torque3DFrontloader::loadStylesheet()
 {
    // load the application style sheet
    QString styleString;
-   QFile styleFile(QDir::toNativeSeparators(ProjectList::getAppPath() + "/Engine/bin/tools/style.css"));
+   QFile styleFile(":/Torque3DFrontloader/resources/style.css");
    if(styleFile.open(QIODevice::ReadOnly))
    {
       styleString.append(QString(styleFile.readAll()));
@@ -1327,7 +1327,7 @@ void Torque3DFrontloader::loadStylesheet()
 	
    if(PlatformCheck::isMac())
    {
-      styleFile.setFileName(QDir::toNativeSeparators(ProjectList::getAppPath() + "/Engine/bin/tools/style-mac.css"));
+      styleFile.setFileName(":/Torque3DFrontloader/resources/style.css");
       if(styleFile.open(QIODevice::ReadOnly))
       {
          styleString.append(QString(styleFile.readAll()));

@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/Torque3DFrontloader" >
-        <file>Resources/TorqueTrident.png</file>
+        <file>resources/style.css</file>
+        <file>resources/style-mac.css</file>
         <file>resources/3ds-c.png</file>
         <file>resources/3ds-r.png</file>
         <file>resources/3ds.png</file>
