@@ -1,10 +1,10 @@
 #ifndef _PROJECT_LIST_H_
 #define _PROJECT_LIST_H_
 
-#include <QtGui>
+#include <QtWidgets>
 #include <QtCore>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <comdef.h>
 #endif
 
@@ -80,7 +80,7 @@ class ProjectList : public QObject
    Q_OBJECT
 
 public:
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    static HWND appWindow;
 #endif
 
@@ -107,7 +107,7 @@ public:
 
    static QString getAppPath(QString path = "");
 	  
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    static BOOL CALLBACK EnumWindowsProc( HWND hwnd, LPARAM lParam );
 #endif
 private:

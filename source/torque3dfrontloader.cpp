@@ -10,7 +10,7 @@
 QWaitCondition pauseThreads;
 QMutex mutex;
 
-Torque3DFrontloader::Torque3DFrontloader(QWidget *parent, Qt::WFlags flags)
+Torque3DFrontloader::Torque3DFrontloader(QWidget *parent, Qt::WindowFlags flags)
    : QMainWindow(parent, flags)
 {
    // this will set this app instance up to listen for any other running in the future,
@@ -1607,29 +1607,29 @@ bool Torque3DFrontloader::generateProjects(QString rootPath)
 
 void Torque3DFrontloader::pauseProcess(QProcess *process)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    _PROCESS_INFORMATION *pi = process->pid();
    PauseResumeThreadList(pi->dwProcessId);
 #endif
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
    ::kill(process->pid(), SIGSTOP);   
 #endif
 }
 
 void Torque3DFrontloader::resumeProcess(QProcess *process)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    _PROCESS_INFORMATION *pi = process->pid();
    PauseResumeThreadList(pi->dwProcessId, true);
 #endif
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
    ::kill(process->pid(), SIGCONT);  
 #endif
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 using namespace std;
    
 int Torque3DFrontloader::PauseResumeThreadList(DWORD dwOwnerPID, bool bResumeThread) 
@@ -1692,7 +1692,7 @@ bool Torque3DFrontloader::getResourceInfo(const QString &filePath, QString &plug
                                           QString &productName, QString &companyName, QString &companyKey, 
                                           QString &version)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    LPTSTR lpszFilePath = (TCHAR *)filePath.utf16();
 
    DWORD dwHandle, dwLen;
@@ -1793,7 +1793,7 @@ bool Torque3DFrontloader::setResourceString(const QString &filePath, const QStri
 {
    value.clear();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    LPTSTR lpszFilePath = (TCHAR *)filePath.utf16();
 
    DWORD dwHandle, dwLen;

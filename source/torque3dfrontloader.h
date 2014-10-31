@@ -13,7 +13,7 @@
 #include "NewProjectPage.h"
 #include "ProjectModuleListPage.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <stdio.h>
 #include <tchar.h>
 #include <windows.h>
@@ -21,7 +21,7 @@
 #include <tlhelp32.h>
 #endif
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include <signal.h>   
 #endif
 
@@ -44,7 +44,7 @@ class Torque3DFrontloader : public QMainWindow
    Q_OBJECT
 
 public:
-   Torque3DFrontloader(QWidget *parent = 0, Qt::WFlags flags = 0);
+   Torque3DFrontloader(QWidget *parent = 0, Qt::WindowFlags flags = 0);
    ~Torque3DFrontloader();
 
    bool mQuit;
@@ -83,7 +83,7 @@ public:
    void readSettings();
    void writeSettings();
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    int PauseResumeThreadList(DWORD dwOwnerPID, bool bResumeThread = false);
 #endif
    bool getResourceInfo(const QString &filePath, QString &plugin, QString &fileDesc, QString &internalName, 
