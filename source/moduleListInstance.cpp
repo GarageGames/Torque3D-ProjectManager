@@ -1,7 +1,7 @@
 #include "moduleListInstance.h"
 
 ModuleListInstance::ModuleListInstance(QWidget *parent)
-   : QObject(parent)
+   : QObject((QObject*)parent)
 {
    mMoveClassIndex = 0;
 }

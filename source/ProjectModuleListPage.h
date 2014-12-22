@@ -1,7 +1,7 @@
 #ifndef PROJECTMODULELISTPAGE_H
 #define PROJECTMODULELISTPAGE_H
 
-#include <QtGui>
+#include <QtWidgets>
 #include "ui_ProjectModuleList.h"
 
 using namespace Ui;

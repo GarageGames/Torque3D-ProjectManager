@@ -29,17 +29,17 @@ void ProgressDialog::setRunning(bool running)
 
    if(running)
    {
-      ResumeButton->setShown(false);
-      PauseButton->setShown(true);
-      CancelButton->setShown(true);
-      CloseButton->setShown(false);
+      ResumeButton->setVisible(false);
+      PauseButton->setVisible(true);
+      CancelButton->setVisible(true);
+      CloseButton->setVisible(false);
    }
    else
    {
-      ResumeButton->setShown(false);
-      PauseButton->setShown(false);
-      CancelButton->setShown(false);
-      CloseButton->setShown(true);
+      ResumeButton->setVisible(false);
+      PauseButton->setVisible(false);
+      CancelButton->setVisible(false);
+      CloseButton->setVisible(true);
    }
 }
 

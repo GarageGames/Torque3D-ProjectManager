@@ -1,7 +1,7 @@
 #include "projectList.h"
 #include <QtXml/QDomDocument>
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    HWND ProjectList::appWindow = NULL;
 #endif
 
@@ -40,10 +40,7 @@ QString ProjectList::getAppPath(QString path)
    {
       basePath = path;
    }
-#ifdef Q_WS_WIN
-   return basePath;
-#endif	
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
    int appIndex = basePath.lastIndexOf(QString(".app"));
    int basePathIndex = basePath.lastIndexOf("/", appIndex);
    QString macPath = basePath.left(basePathIndex);
@@ -55,6 +52,8 @@ QString ProjectList::getAppPath(QString path)
    }
 	
    return macPath;
+#else
+   return basePath;
 #endif
 }
 
@@ -266,7 +265,7 @@ void ProjectList::appStateChanged(QProcess::ProcessState newState)
       appFinished();
 }
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 
 BOOL CALLBACK ProjectList::EnumWindowsProc(HWND hwnd, LPARAM param)
 {
@@ -286,7 +285,7 @@ BOOL CALLBACK ProjectList::EnumWindowsProc(HWND hwnd, LPARAM param)
 
 void ProjectList::toggleEditor(int editorMode)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
    //PostMessage(ProjectList::appWindow, WM_TOGGLE_EDITOR, editorMode, 0);
 #endif
 }

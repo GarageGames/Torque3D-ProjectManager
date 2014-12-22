@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QApplication>
 #include "torque3dfrontloader.h"
 
 int main(int argc, char *argv[])
