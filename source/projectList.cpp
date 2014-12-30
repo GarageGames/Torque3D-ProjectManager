@@ -6,7 +6,7 @@
 #endif
 
 
-QString ProjectEntry::getAppPath() 
+QString DirEntry::getAppPath() 
 { 
    return ProjectList::getAppPath(QFileInfo(mPath).absolutePath()); 
 }
@@ -191,20 +191,15 @@ void ProjectList::buildList()
                   if(templateDir.cd("game"))
                   {
                      // Add the template path
-                     ProjectEntry *newEntry = new ProjectEntry();
+                     TemplateEntry *newEntry = new TemplateEntry();
                      newEntry->mPath = templateDir.path();
                      newEntry->mName = templateInfo.fileName();
                      newEntry->mRootName = title;
                      newEntry->mRootPath = templateInfo.absoluteFilePath();
 
-                     // Check for command line arguments
-                     if(e.hasAttribute("args"))
-                     {
-                        newEntry->mArgs = e.attribute("args", "");
-                     }
-
                      mTemplateDirectoryList.insert(title, newEntry);
 
+                     newEntry->findPackages();
                   }
                }
             }
@@ -243,6 +238,60 @@ void ProjectList::buildList()
             delete entry;
          }
       }
+   }
+}
+
+void TemplateEntry::findPackages()
+{
+   static const QString templateFileName = "template.xml";
+
+   // Load in the xml file, parse it, and build out the controls
+   QDomDocument doc("template");
+
+   QString basePath = mRootPath;
+   //QString projectsPath = baseAppPath + "/Engine/bin/tools/projects.xml";
+   QString templatePath = basePath + "/" + templateFileName;
+   QFile file(templatePath);
+   std::string debug = templatePath.toStdString();
+
+   if (!file.open(QIODevice::ReadOnly))
+   {
+      return;
+   }
+
+   if (!doc.setContent(&file))
+   {
+      file.close();
+      return;
+   }
+
+   file.close();
+
+   // Process
+   QDomElement docElem = doc.documentElement();
+   QDomNode n = docElem.firstChild();
+   while(!n.isNull())
+   {
+      QDomElement e = n.toElement();
+      if(!e.isNull() && e.tagName() == "package")
+      {
+         // projectDirectory
+         if(e.hasAttribute("path") && e.hasAttribute("inclusion"))
+         {
+            QString title = e.attribute("path");
+            QString inclusion = e.attribute("inclusion");
+
+            if(inclusion == "required")
+            {
+               mRequiredPackages.append(title);
+            }
+            else if(inclusion == "recommended")
+            {
+               mRecommendedPackages.append(title);
+            }
+         }
+      }
+      n = n.nextSibling();
    }
 }
 

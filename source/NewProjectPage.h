@@ -7,7 +7,7 @@
 using namespace Ui;
 
 class Torque3DFrontloader;
-class ProjectEntry;
+class TemplateEntry;
 class ModuleListInstance;
 
 class NewProjectPage : public QWidget, public NewProjectPageClass
@@ -16,7 +16,7 @@ class NewProjectPage : public QWidget, public NewProjectPageClass
 
 private:
    Torque3DFrontloader *mFrontloader;
-   QMap<QString, ProjectEntry*> mTemplateNameList;
+   QMap<QString, TemplateEntry*> mTemplateNameList;
    ModuleListInstance* mCurrentInstance;
 
 public:

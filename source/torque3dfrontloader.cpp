@@ -1375,7 +1375,7 @@ void Torque3DFrontloader::projectCategoryRemoved(QString title)
 }
 
 
-QPixmap *Torque3DFrontloader::getProjectPixmap(ProjectEntry *entry)
+QPixmap *Torque3DFrontloader::getProjectPixmap(DirEntry *entry)
 {
    QPixmap *pixmap = NULL;
    QFile thumb(entry->mRootPath + QDir::separator() + "thumb.png");

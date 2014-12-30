@@ -8,18 +8,31 @@
 #include <comdef.h>
 #endif
 
-class ProjectEntry
+class DirEntry
 {
 public:
-   QString    mPath;
-   QString    mName;
-   QString    mRootName;
-   QString    mRootPath;
-   QString    mArgs;
+   QString mPath;
+   QString mName;
+   QString mRootName;
+   QString mRootPath;
 
    QString getUniqueName() { return QString(mRootName + "-" + mName); };
    QString getAppPath();
+};
+
+class ProjectEntry : public DirEntry
+{
+public:
+   QString mArgs;
    QString getLevelPath();
+};
+
+class TemplateEntry : public DirEntry
+{
+public:
+   QList<QString> mRequiredPackages;
+   QList<QString> mRecommendedPackages;
+   void findPackages();
 };
 
 /* ProjectList
@@ -99,8 +112,8 @@ public:
    QMultiMap<QString, ProjectEntry*>      *getProjectDirectoryList() { return &mProjectDirectoryList; };
    QList<ProjectEntry*>                   *getProjectFileList() { return &mProjectFileList; };
 
-   QMultiMap<QString, ProjectEntry*>      mTemplateDirectoryList;
-   QMultiMap<QString, ProjectEntry*>      *getTemplateDirectoryList() { return &mTemplateDirectoryList; };
+   QMultiMap<QString, TemplateEntry*>      mTemplateDirectoryList;
+   QMultiMap<QString, TemplateEntry*>      *getTemplateDirectoryList() { return &mTemplateDirectoryList; };
 
    void toggleEditor(int editorMode);
    ProjectEntry *getFirstProjectEntry();

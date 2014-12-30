@@ -110,7 +110,7 @@ public:
    void replaceTextInFile(QString file, QString srcText, QString dstText);
    void createNewProject(const QString &templatePath, const QString &newProjectPath, ModuleListInstance* moduleInst);
 
-   QPixmap *getProjectPixmap(ProjectEntry *entry);
+   QPixmap *getProjectPixmap(DirEntry *entry);
 
    void renameFile(const QString &filePath, const QString &newName);
    void renameMacApp(const QString &filePath, const QString &oldName, const QString &bundleName, const QString &newName, const QString &newBundleName, bool processWebPlugin = false);
