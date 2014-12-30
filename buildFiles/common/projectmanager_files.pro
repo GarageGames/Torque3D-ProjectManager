@@ -1,4 +1,4 @@
-TARGET = ProjectManager
+TARGET = "Project Manager"
 DEPENDPATH += . ../../source
 INCLUDEPATH += .
 CONFIG += qt
