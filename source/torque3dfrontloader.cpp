@@ -668,7 +668,9 @@ void Torque3DFrontloader::packageProjectStaging()
       connect(&mCopyDir, SIGNAL(fileCopyDone(bool, bool)), this, SLOT(updateStagingFileDone(bool, bool)));
       connect(&mCopyDir, SIGNAL(fileCopyDone(bool, bool)), &mCopyDir, SLOT(quit()));
 
-      mCopyDir.setValues(rootProjectPath.path(), outputDir.path(), nameExcludeFilter, nameIncludeFilter);
+      QStringList dirs;
+      dirs.push_front(rootProjectPath.path());
+      mCopyDir.setValues(dirs, outputDir.path(), nameExcludeFilter, nameIncludeFilter);
       mCopyDir.start();
    }
 }
@@ -715,7 +717,7 @@ void Torque3DFrontloader::createProjectCheck()
    setSelectedProjectByUniqueName(uniqueName, false);
 }
 
-void Torque3DFrontloader::createNewProject(const QString &templatePath, const QString &newProjectPath, ModuleListInstance* moduleInst)
+void Torque3DFrontloader::createNewProject(const QString &templatePath, const QStringList &packagePaths, const QString &newProjectPath, ModuleListInstance* moduleInst)
 {
    // init values
    mCreateTemplateCopyDone = false;
@@ -730,6 +732,7 @@ void Torque3DFrontloader::createNewProject(const QString &templatePath, const QS
 
    mTemplateDir.setPath(templatePath);
    mNewProjectDir.setPath(newProjectPath);
+   mPackagePaths = packagePaths;
 
    mNewProjectModuleList = moduleInst;
 
@@ -881,17 +884,19 @@ void Torque3DFrontloader::createTemplateCopy()
       mNewProjectDir.mkdir(mNewProjectDir.path());
 
    // our new project path exists, time to copy everything we want over to it
-   mTemplateDir.setFilter(QDir::AllDirs | QDir::Files | QDir::Hidden);
    QStringList nameExcludeFilter;
    nameExcludeFilter << "*.obj" << "*.exp" << "*.ilk" << "*.pch" << "*.sbr" << "*.pdb" << "*.sln" << "*.suo";
    nameExcludeFilter << "*/buildFiles/Xcode/*";
+   nameExcludeFilter << "*/template.xml";
    QStringList nameIncludeFilter;
 
    connect(&mCopyDir, SIGNAL(updateFileCount(int)), this, SLOT(updateCreateProjectCount(int)));
    connect(&mCopyDir, SIGNAL(updateFileProgress(int, QString)), this, SLOT(updateCreateProjectProgress(int, QString)));
    connect(&mCopyDir, SIGNAL(fileCopyDone(bool, bool)), this, SLOT(updateCreateProjectDone(bool, bool)));
    connect(&mCopyDir, SIGNAL(fileCopyDone(bool, bool)), &mCopyDir, SLOT(quit()));
-   mCopyDir.setValues(mTemplateDir.path(), mNewProjectDir.path(), nameExcludeFilter, nameIncludeFilter);
+   QStringList dirs = mPackagePaths;
+   dirs.push_front(mTemplateDir.path());
+   mCopyDir.setValues(dirs, mNewProjectDir.path(), nameExcludeFilter, nameIncludeFilter);
    mCopyDir.start();
 }
 

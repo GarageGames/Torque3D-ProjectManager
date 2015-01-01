@@ -63,7 +63,6 @@ void ProjectList::buildList()
    QDomDocument doc("projects");
 
    QString baseAppPath = getAppPath();
-   //QString projectsPath = baseAppPath + "/Engine/bin/tools/projects.xml";
    QString projectsPath = baseAppPath + "projects.xml";
    QFile file(projectsPath);
       
@@ -244,15 +243,14 @@ void ProjectList::buildList()
 void TemplateEntry::findPackages()
 {
    static const QString templateFileName = "template.xml";
+   static const QString packageDirName = "Packages";
 
    // Load in the xml file, parse it, and build out the controls
    QDomDocument doc("template");
 
    QString basePath = mRootPath;
-   //QString projectsPath = baseAppPath + "/Engine/bin/tools/projects.xml";
-   QString templatePath = basePath + "/" + templateFileName;
+   QString templatePath = basePath + QDir::separator() + templateFileName;
    QFile file(templatePath);
-   std::string debug = templatePath.toStdString();
 
    if (!file.open(QIODevice::ReadOnly))
    {
@@ -267,7 +265,6 @@ void TemplateEntry::findPackages()
 
    file.close();
 
-   // Process
    QDomElement docElem = doc.documentElement();
    QDomNode n = docElem.firstChild();
    while(!n.isNull())
@@ -275,19 +272,20 @@ void TemplateEntry::findPackages()
       QDomElement e = n.toElement();
       if(!e.isNull() && e.tagName() == "package")
       {
-         // projectDirectory
          if(e.hasAttribute("path") && e.hasAttribute("inclusion"))
          {
             QString title = e.attribute("path");
             QString inclusion = e.attribute("inclusion");
+            QDir packageDir(packageDirName + QDir::separator() + title);
+            QString path = packageDir.absolutePath();
 
             if(inclusion == "required")
             {
-               mRequiredPackages.append(title);
+               mRequiredPackages.append(path);
             }
             else if(inclusion == "recommended")
             {
-               mRecommendedPackages.append(title);
+               mRecommendedPackages.append(path);
             }
          }
       }

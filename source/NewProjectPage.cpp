@@ -156,7 +156,8 @@ void NewProjectPage::on_newProjectCreateButton_clicked()
       {
          QString templatePath = QDir::toNativeSeparators(entry->mRootPath);
          QString newProjectPath = QDir::toNativeSeparators(DirectoryTextEdit->text() + "/" + NameTextEdit->text());
-         mFrontloader->createNewProject(templatePath, newProjectPath, mCurrentInstance);
+         QStringList packagePaths = entry->mRecommendedPackages + entry->mRequiredPackages;
+         mFrontloader->createNewProject(templatePath, packagePaths, newProjectPath, mCurrentInstance);
       }
    }
 }
