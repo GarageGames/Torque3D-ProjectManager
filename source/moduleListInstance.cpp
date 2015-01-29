@@ -199,6 +199,12 @@ bool ModuleListInstance::readModulePath(QString& text)
 
 bool ModuleListInstance::readModule(QString& text)
 {
+   // Strip text back and get exact module name
+   QString strippedText = text.simplified();
+   strippedText.replace( " ", "" );
+   strippedText.remove("includeModule('");
+   strippedText.remove("');");
+
    // Try against module groups
    for(int i=0; i<mModuleGroupInstances.count(); ++i)
    {
@@ -207,7 +213,7 @@ bool ModuleListInstance::readModule(QString& text)
       for(int j=0; j<group->mModules.count(); ++j)
       {
          ModuleEntry* module = group->mModules.at(j);
-         if(!module->mName.isEmpty() && text.contains(module->mName, Qt::CaseInsensitive))
+         if(!module->mName.isEmpty() && strippedText == module->mName)
          {
             // Found a match
             groupInst->mGroupIndex = j;
@@ -221,7 +227,7 @@ bool ModuleListInstance::readModule(QString& text)
    {
       ProjectGenInstance* inst = mModuleInstances.at(i);
       ModuleEntry* module = static_cast<ModuleEntry*>(inst->mProjectGenItem);
-      if(text.contains(module->mName, Qt::CaseInsensitive))
+      if(strippedText == module->mName)
       {
          // Found a match
          inst->mState = true;
