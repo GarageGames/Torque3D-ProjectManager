@@ -52,16 +52,16 @@ void NewProjectPage::setDefaults()
 
 void NewProjectPage::buildTemplateList()
 {
-   QMultiMap<QString, ProjectEntry*> *dirList = mFrontloader->getProjectList()->getTemplateDirectoryList();
+   QMultiMap<QString, TemplateEntry*> *dirList = mFrontloader->getProjectList()->getTemplateDirectoryList();
 
-   QList<ProjectEntry*> entryList = dirList->values("Templates");
+   QList<TemplateEntry*> entryList = dirList->values("Templates");
 
    mTemplateNameList.clear();
    TemplateList->clear();
 
    for(int i=0; i<entryList.size(); i++)
    {
-      ProjectEntry *entry = entryList.at(i);
+      TemplateEntry *entry = entryList.at(i);
 
       if(mTemplateNameList.values(entry->mName).size() == 0)
       {
@@ -88,7 +88,7 @@ void NewProjectPage::buildTemplateList()
 
 void NewProjectPage::on_TemplateList_textChanged(const QString &text)
 {
-   ProjectEntry *entry = mTemplateNameList.value(text);
+   TemplateEntry *entry = mTemplateNameList.value(text);
 
    if(entry != NULL)
    {
@@ -141,7 +141,7 @@ void NewProjectPage::on_newProjectCreateButton_clicked()
 {
    if(mFrontloader != NULL)
    {
-      ProjectEntry *entry = mTemplateNameList.value(TemplateList->currentText());
+      TemplateEntry *entry = mTemplateNameList.value(TemplateList->currentText());
 
       //If a project with no path is specified, the project will delete the "My Projects"
       //Folder and then present the user with an error that the project couldn't be created.
@@ -156,7 +156,8 @@ void NewProjectPage::on_newProjectCreateButton_clicked()
       {
          QString templatePath = QDir::toNativeSeparators(entry->mRootPath);
          QString newProjectPath = QDir::toNativeSeparators(DirectoryTextEdit->text() + "/" + NameTextEdit->text());
-         mFrontloader->createNewProject(templatePath, newProjectPath, mCurrentInstance);
+         QStringList packagePaths = entry->mRecommendedPackages + entry->mRequiredPackages;
+         mFrontloader->createNewProject(templatePath, packagePaths, newProjectPath, mCurrentInstance);
       }
    }
 }

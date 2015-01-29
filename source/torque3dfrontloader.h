@@ -108,9 +108,9 @@ public:
    void createProjectGeneration();
 	
    void replaceTextInFile(QString file, QString srcText, QString dstText);
-   void createNewProject(const QString &templatePath, const QString &newProjectPath, ModuleListInstance* moduleInst);
+   void createNewProject(const QString &templatePath, const QStringList &packagePaths, const QString &newProjectPath, ModuleListInstance* moduleInst);
 
-   QPixmap *getProjectPixmap(ProjectEntry *entry);
+   QPixmap *getProjectPixmap(DirEntry *entry);
 
    void renameFile(const QString &filePath, const QString &newName);
    void renameMacApp(const QString &filePath, const QString &oldName, const QString &bundleName, const QString &newName, const QString &newBundleName, bool processWebPlugin = false);
@@ -256,6 +256,7 @@ private:
 
    QDir mTemplateDir;
    QDir mNewProjectDir;
+   QStringList mPackagePaths;
    ModuleListInstance* mNewProjectModuleList;
    ModuleListInstance* mChangeProjectModulesList;
 

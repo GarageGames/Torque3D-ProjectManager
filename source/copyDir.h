@@ -13,7 +13,7 @@ class CopyDir : public QThread
 
 public:
    void run();	  
-   void setValues(QString srcDir, QString dstDir, QStringList nameExcludeFilter = QStringList(), QStringList nameIncludeFilter = QStringList());
+   void setValues(QStringList srcDirs, QString dstDir, QStringList nameExcludeFilter = QStringList(), QStringList nameIncludeFilter = QStringList());
    bool copyDirAndFiles(QString srcDir, QString dstDir, QStringList *nameExcludeFilter, QStringList *nameIncludeFilter, QStringList *srcFileList = NULL, QStringList *dstFileList = NULL);
 
 signals:
@@ -28,7 +28,7 @@ public slots:
 
 private:
    QString mRootDir;
-   QString mSrcDir;
+   QStringList mSrcDirs;
    QString mDstDir;
    QStringList mNameExcludeFilter;
    QStringList mNameIncludeFilter;

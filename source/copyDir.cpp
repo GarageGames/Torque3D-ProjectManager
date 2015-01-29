@@ -5,22 +5,31 @@ void CopyDir::run()
 {  
    mPause = false;
    mExitNow = false;
-   bool success = copyDirAndFiles(mSrcDir, mDstDir, &mNameExcludeFilter, &mNameIncludeFilter);
+   bool success = true;
 
-   mutex.lock();
-   if(mPause)
+   QStringList::const_iterator it;
+   for(it = mSrcDirs.cbegin(); it != mSrcDirs.cend(); ++it)
    {
-      pauseThreads.wait(&mutex);
+      QString srcDir = *it;
+      mRootDir = srcDir;
+      success &= copyDirAndFiles(srcDir, mDstDir, &mNameExcludeFilter, &mNameIncludeFilter);
+
+      if(!success) break;
+
+      mutex.lock();
+      if(mPause)
+      {
+         pauseThreads.wait(&mutex);
+      }
+      mutex.unlock();
    }
-   mutex.unlock();
    
    emit fileCopyDone(success, mExitNow);
 }
 
-void CopyDir::setValues(QString srcDir, QString dstDir, QStringList nameExcludeFilter, QStringList nameIncludeFilter)
+void CopyDir::setValues(QStringList srcDirs, QString dstDir, QStringList nameExcludeFilter, QStringList nameIncludeFilter)
 {
-   mRootDir = srcDir;
-   mSrcDir = srcDir;
+   mSrcDirs = srcDirs;
    mDstDir = dstDir;
    mNameExcludeFilter = nameExcludeFilter;
    mNameIncludeFilter = nameIncludeFilter;

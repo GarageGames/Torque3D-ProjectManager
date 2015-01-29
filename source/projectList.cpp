@@ -6,7 +6,7 @@
 #endif
 
 
-QString ProjectEntry::getAppPath() 
+QString DirEntry::getAppPath() 
 { 
    return ProjectList::getAppPath(QFileInfo(mPath).absolutePath()); 
 }
@@ -63,7 +63,6 @@ void ProjectList::buildList()
    QDomDocument doc("projects");
 
    QString baseAppPath = getAppPath();
-   //QString projectsPath = baseAppPath + "/Engine/bin/tools/projects.xml";
    QString projectsPath = baseAppPath + "projects.xml";
    QFile file(projectsPath);
       
@@ -191,20 +190,15 @@ void ProjectList::buildList()
                   if(templateDir.cd("game"))
                   {
                      // Add the template path
-                     ProjectEntry *newEntry = new ProjectEntry();
+                     TemplateEntry *newEntry = new TemplateEntry();
                      newEntry->mPath = templateDir.path();
                      newEntry->mName = templateInfo.fileName();
                      newEntry->mRootName = title;
                      newEntry->mRootPath = templateInfo.absoluteFilePath();
 
-                     // Check for command line arguments
-                     if(e.hasAttribute("args"))
-                     {
-                        newEntry->mArgs = e.attribute("args", "");
-                     }
-
                      mTemplateDirectoryList.insert(title, newEntry);
 
+                     newEntry->findPackages();
                   }
                }
             }
@@ -243,6 +237,59 @@ void ProjectList::buildList()
             delete entry;
          }
       }
+   }
+}
+
+void TemplateEntry::findPackages()
+{
+   static const QString templateFileName = "template.xml";
+   static const QString packageDirName = "Packages";
+
+   // Load in the xml file, parse it, and build out the controls
+   QDomDocument doc("template");
+
+   QString basePath = mRootPath;
+   QString templatePath = basePath + QDir::separator() + templateFileName;
+   QFile file(templatePath);
+
+   if (!file.open(QIODevice::ReadOnly))
+   {
+      return;
+   }
+
+   if (!doc.setContent(&file))
+   {
+      file.close();
+      return;
+   }
+
+   file.close();
+
+   QDomElement docElem = doc.documentElement();
+   QDomNode n = docElem.firstChild();
+   while(!n.isNull())
+   {
+      QDomElement e = n.toElement();
+      if(!e.isNull() && e.tagName() == "package")
+      {
+         if(e.hasAttribute("path") && e.hasAttribute("inclusion"))
+         {
+            QString title = e.attribute("path");
+            QString inclusion = e.attribute("inclusion");
+            QDir packageDir(packageDirName + QDir::separator() + title);
+            QString path = packageDir.absolutePath();
+
+            if(inclusion == "required")
+            {
+               mRequiredPackages.append(path);
+            }
+            else if(inclusion == "recommended")
+            {
+               mRecommendedPackages.append(path);
+            }
+         }
+      }
+      n = n.nextSibling();
    }
 }
 
