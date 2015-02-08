@@ -160,6 +160,10 @@ void ModuleList::buildList()
                   ModuleEntry* module = createModule(eModule);
                   if(module)
                   {
+                     if(e.hasAttribute("default"))
+                     {
+                        module->mDefaultChoice = (e.attribute("default").toInt() == 1);
+                     }
                      mModules.push_back(module);
                   }
                }
