@@ -272,11 +272,11 @@ void TemplateEntry::findPackages()
       QDomElement e = n.toElement();
       if(!e.isNull() && e.tagName() == "package")
       {
-         if(e.hasAttribute("path") && e.hasAttribute("inclusion"))
+         if(e.hasAttribute("name") && e.hasAttribute("inclusion"))
          {
-            QString title = e.attribute("path");
+            QString name = e.attribute("name");
             QString inclusion = e.attribute("inclusion");
-            QDir packageDir(packageDirName + QDir::separator() + title);
+            QDir packageDir(packageDirName + QDir::separator() + name + QDir::separator() + "package");
             QString path = packageDir.absolutePath();
 
             if(inclusion == "required")
